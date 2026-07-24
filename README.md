@@ -87,4 +87,3 @@ php artisan route:list
 ## License
 
 This project is intended for demo and development use. If you are publishing it publicly, you may want to add your preferred license file, such as MIT.
-

@@ -1,0 +1,50 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: usermanagement_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - usermanagement_network
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: usermanagement_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - usermanagement_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: usermanagement_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: usermanagement
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravelpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - usermanagement_network
+
+networks:
+  usermanagement_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

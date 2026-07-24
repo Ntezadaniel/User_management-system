@@ -1,0 +1,16 @@
+/node_modules
+/vendor
+/.git
+/.github
+/storage/*.key
+/.env
+/.env.backup
+/.phpunit.result.cache
+Dockerfile
+docker-compose.yml
+.dockerignore
+npm-debug.log
+yarn-error.log
+/public/hot
+/public/storage
+/public/build
